@@ -165,6 +165,7 @@ public final class MessageUtils {
 				enumList.add(UOMFeatureTypeEnum.class);
 				enumList.add(WeekEnum.class);
 				enumList.add(SourceTypeEnum.class);
+				enumList.add(PaymentExtendedTypeEnum.class);
 			}
 			return enumList;
 		}
