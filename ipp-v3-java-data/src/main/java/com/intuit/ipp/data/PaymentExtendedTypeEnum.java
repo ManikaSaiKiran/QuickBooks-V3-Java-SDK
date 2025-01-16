@@ -14,30 +14,27 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for SymbolPositionEnum.
+ * <p>Java class for PaymentExtendedTypeEnum.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <pre>
- * &lt;simpleType name="SymbolPositionEnum"&gt;
+ * &lt;simpleType name="PaymentExtendedTypeEnum"&gt;
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
- *     &lt;enumeration value="Leading"/&gt;
- *     &lt;enumeration value="Trailing"/&gt;
+ *     &lt;enumeration value="Prepayment"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
  * 
  */
-@XmlType(name = "SymbolPositionEnum")
+@XmlType(name = "PaymentExtendedTypeEnum")
 @XmlEnum
-public enum SymbolPositionEnum {
+public enum PaymentExtendedTypeEnum {
 
-    @XmlEnumValue("Leading")
-    LEADING("Leading"),
-    @XmlEnumValue("Trailing")
-    TRAILING("Trailing");
+    @XmlEnumValue("Prepayment")
+    PREPAYMENT("Prepayment");
     private final String value;
 
-    SymbolPositionEnum(String v) {
+    PaymentExtendedTypeEnum(String v) {
         value = v;
     }
 
@@ -45,8 +42,8 @@ public enum SymbolPositionEnum {
         return value;
     }
 
-    public static SymbolPositionEnum fromValue(String v) {
-        for (SymbolPositionEnum c: SymbolPositionEnum.values()) {
+    public static PaymentExtendedTypeEnum fromValue(String v) {
+        for (PaymentExtendedTypeEnum c: PaymentExtendedTypeEnum.values()) {
             if (c.value.equals(v)) {
                 return c;
             }
