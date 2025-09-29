@@ -20,20 +20,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.Version;
-import com.fasterxml.jackson.databind.AnnotationIntrospector;
-import com.fasterxml.jackson.databind.DeserializationConfig;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
+//import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 import com.fasterxml.jackson.databind.introspect.AnnotationIntrospectorPair;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 
+import com.fasterxml.jackson.module.jakarta.xmlbind.JakartaXmlBindAnnotationIntrospector;
 import com.intuit.ipp.data.CDCResponse;
 import com.intuit.ipp.data.Fault;
 import com.intuit.ipp.data.QueryResponse;
@@ -69,9 +64,9 @@ public class CDCQueryResponseDeserializer extends JsonDeserializer<CDCResponse> 
 	@Override
 	public CDCResponse deserialize(JsonParser jp, DeserializationContext desContext) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
-
+		mapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS,true);
 		//Make the mapper JAXB annotations aware
-		AnnotationIntrospector primary = new JaxbAnnotationIntrospector();
+		AnnotationIntrospector primary = new JakartaXmlBindAnnotationIntrospector();
 		AnnotationIntrospector secondary = new JacksonAnnotationIntrospector();
 		AnnotationIntrospector pair = new AnnotationIntrospectorPair(primary, secondary);
 		mapper.setAnnotationIntrospector(pair);

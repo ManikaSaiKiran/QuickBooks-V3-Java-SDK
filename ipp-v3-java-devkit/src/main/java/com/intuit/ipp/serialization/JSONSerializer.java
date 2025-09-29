@@ -15,17 +15,19 @@
  *******************************************************************************/
 package com.intuit.ipp.serialization;
 
-import javax.xml.bind.JAXBElement;
+import com.fasterxml.jackson.module.jakarta.xmlbind.JakartaXmlBindAnnotationIntrospector;
+import jakarta.xml.bind.JAXBElement;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.introspect.AnnotationIntrospectorPair;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
+//import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 import com.intuit.ipp.core.Response;
 import com.intuit.ipp.data.APCreditCardOperationEnum;
 import com.intuit.ipp.data.AccountClassificationEnum;
@@ -245,7 +247,7 @@ public class JSONSerializer implements IEntitySerializer {
 
 		ObjectMapper mapper = new ObjectMapper();
 		AnnotationIntrospector primary = new JacksonAnnotationIntrospector();
-		AnnotationIntrospector secondary = new JaxbAnnotationIntrospector(mapper.getTypeFactory());
+		AnnotationIntrospector secondary =new JakartaXmlBindAnnotationIntrospector(mapper.getTypeFactory());
 		AnnotationIntrospector pair = new AnnotationIntrospectorPair(primary, secondary);
 
 		mapper.setAnnotationIntrospector(pair);
@@ -285,7 +287,7 @@ public class JSONSerializer implements IEntitySerializer {
 
 		Response intuitResponse = null;
 		ObjectMapper mapper = new ObjectMapper();
-
+		mapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS,true);
 		SimpleModule simpleModule = new SimpleModule("IntuitResponseDeserializer", new Version(1, 0, 0, null));
 		simpleModule.addDeserializer(IntuitResponse.class, new IntuitResponseDeserializer());
 		mapper.registerModule(simpleModule);
